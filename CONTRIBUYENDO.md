@@ -44,7 +44,7 @@ Si no hay consenso:
 
 ## Commits y mensajes
 
-Mensajes claros y en español o inglés, pero concretos. Ejemplos:
+Los mensajes de commit deben estar **en español**, ser claros y concretos. Ejemplos:
 
 - `Añade propuesta ucjc:identidad:sesion@1`
 - `Depreca ucjc:compra:vaciar@1 y propone @2`
