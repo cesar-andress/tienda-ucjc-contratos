@@ -1,5 +1,22 @@
 # Contrato: ucjc:compra:pedido-confirmado@1
 
+## Para verificar y dar el OK (Datos A — Hans)
+
+Compara con tu Hoja B Datos↔Compra y tu README. Marca en el **comentario del Pull Request** (no edites este fichero salvo que el profesor te lo pida).
+
+- [ ] Nombre del evento correcto: `ucjc:compra:pedido-confirmado@1`
+- [ ] Emisor = Compra; consumidor = Datos
+- [ ] Campos: `orderId`, `userId`, `createdAt`, `total`, `items[]` (`productId`, `name`, `price`, `quantity`) — todos obligatorios
+- [ ] El ejemplo JSON coincide con la tabla
+- [ ] Mantengo que `orderId` lo envía Compra (conflicto de aula)
+- [ ] Estado `propuesto` OK hasta firma de Compra
+
+Si todo encaja, comenta en el PR: `Confirmo que el equipo Datos acepta ucjc:compra:pedido-confirmado@1 según lo acordado en clase.`
+
+Si algo falla, indica **campo concreto** y el valor que quieres.
+
+---
+
 ## Nombre del evento
 
 ```text
