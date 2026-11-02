@@ -1,22 +1,4 @@
-# Contrato: ucjc:identidad:sesion-cambiada@1
-
-## Para verificar y dar el OK (Datos A — Hans)
-
-Compara con tu Hoja B Datos↔Identidad y tu README. Marca en el **comentario del Pull Request**.
-
-- [ ] Nombre del evento correcto: `ucjc:identidad:sesion-cambiada@1`
-- [ ] Emisor = Identidad; consumidor = Datos
-- [ ] Campos: `isAuthenticated`; `user` obligatorio si autenticado; `user.id` y `user.email` obligatorios dentro de `user`
-- [ ] Ejemplos de sesión abierta y cerrada correctos
-- [ ] Al logout, Datos limpia «Mis pedidos»
-- [ ] Mantengo `id` + `email` legibles (conflicto con id anónimo)
-- [ ] Estado `propuesto` OK hasta firma de Identidad
-
-Si todo encaja, comenta en el PR: `Confirmo que el equipo Datos acepta ucjc:identidad:sesion-cambiada@1 según lo acordado en clase.`
-
-Si algo falla, indica **campo concreto** y el valor que quieres.
-
----
+# Contrato: `ucjc:identidad:sesion-cambiada@1`
 
 ## Nombre del evento
 
@@ -24,81 +6,125 @@ Si algo falla, indica **campo concreto** y el valor que quieres.
 ucjc:identidad:sesion-cambiada@1
 ```
 
+Nombre de fichero: `ucjc-identidad-sesion-cambiada@1.md`
+
 ## Versión
 
 | Campo | Valor |
 | --- | --- |
-| Versión del evento | `1` |
-| ¿Sustituye a una versión anterior? | `no` |
+| Versión del contrato del evento | `1` |
+| ¿Sustituye a una versión anterior? | no |
 
 ## Equipo emisor
 
-Identidad
+**Identidad**
 
 ## Equipos consumidores
 
-- Datos (variante A — Hans Jefferson Arauco Sanchez)
-- Datos (variante B — cuando exista equipo/repo; pendiente de confirmar)
-- Compra *(si también lo consume; confirmar)*
+- **Datos** (variante A — Hans Jefferson Arauco Sanchez / `tienda-ucjc-datos`)
+- **Datos** (variante B — cuando publiquen repo; deben confirmar)
+- **Compra** (necesita saber si hay sesión para checkout; debe confirmar este contrato o uno posterior si sus campos difieren)
 
 ## Descripción
 
-Identidad emite este evento al iniciar sesión, al cerrarla y, si procede, al cargar la pieza con el estado actual. Datos lo usa para filtrar «Mis pedidos» por usuario y para limpiar la vista al cerrar sesión (`isAuthenticated: false`).
+Identidad emite este evento:
 
-## Campos y tipos
+1. al **iniciar** sesión,
+2. al **cerrar** sesión,
+3. al **cargar** la pieza, con el estado actual (para quien llegue tarde).
+
+Datos lo usa para filtrar «Mis pedidos» por `usuario.id` y para **vaciar la vista** cuando `autenticado` es `false` (no dejar pedidos de otro usuario en pantalla).
+
+## Campos y tipos (`event.detail`)
 
 | Campo | Tipo | Obligatorio / opcional | Descripción |
 | --- | --- | --- | --- |
-| `isAuthenticated` | booleano | obligatorio | `true` si hay sesión activa; `false` al cerrar sesión. |
-| `user` | objeto | opcional; **obligatorio si** `isAuthenticated` es `true` | Datos del usuario. Si `isAuthenticated` es `false`, usar `null` o omitir. |
-| `user.id` | texto | obligatorio (si hay `user`) | Identificador del usuario. |
-| `user.email` | texto | obligatorio (si hay `user`) | Correo del usuario (legible para mostrar en historial, según acuerdo en plenario Datos). |
+| `autenticado` | booleano | obligatorio | `true` si hay sesión activa; `false` al cerrar sesión o sin sesión. |
+| `usuario` | objeto o `null` | obligatorio | Si `autenticado` es `true`, objeto de usuario. Si `autenticado` es `false`, debe ser `null`. |
+| `momento` | texto (ISO 8601) | opcional | Instantánea del cambio de sesión (útil para depuración y logs). |
+
+### Campos de `usuario` (cuando no es `null`)
+
+| Campo | Tipo | Obligatorio / opcional | Descripción |
+| --- | --- | --- | --- |
+| `id` | texto | obligatorio | Identificador estable del usuario (el que Compra pondrá en `usuarioId` del pedido). |
+| `email` | texto | obligatorio | Correo legible para mostrar en la UI de pedidos / perfil. |
+| `nombre` | texto | opcional | Nombre para mostrar; no sustituye a `id` ni a `email`. |
 
 ## Campos obligatorios y opcionales
 
-- **Obligatorios:** `isAuthenticated`; `user` (con `id` y `email`) cuando `isAuthenticated` es `true`
-- **Opcionales:** `user` cuando `isAuthenticated` es `false` (recomendado: `null`)
+- **Obligatorios:** `autenticado`, `usuario` (`null` o objeto completo según el caso); si hay objeto: `id`, `email`
+- **Opcionales:** `momento`; `usuario.nombre`
 
-## Ejemplo de payload
+## Ejemplos de payload
 
-Sesión iniciada:
+### Sesión iniciada (o estado actual autenticado)
 
 ```json
 {
-  "isAuthenticated": true,
-  "user": {
+  "autenticado": true,
+  "usuario": {
     "id": "u-123",
-    "email": "ana@alumno.ucjc.edu"
-  }
+    "email": "ana@alumno.ucjc.edu",
+    "nombre": "Ana Pérez"
+  },
+  "momento": "2026-10-26T10:00:00Z"
 }
 ```
 
-Sesión cerrada:
+### Sesión cerrada (o sin sesión)
 
 ```json
 {
-  "isAuthenticated": false,
-  "user": null
+  "autenticado": false,
+  "usuario": null,
+  "momento": "2026-10-26T10:05:00Z"
 }
 ```
 
-## Responsables que aprobaron el contrato
+## Correspondencia con borradores previos (no usar en código)
+
+| Borrador antiguo | Canónico `@1` |
+| --- | --- |
+| `ucjc:sesion-cambiada:v1` (README Identidad) | `ucjc:identidad:sesion-cambiada@1` |
+| `ucjc:identidad:sesion-cambiada:v1` (README Compra) | `ucjc:identidad:sesion-cambiada@1` |
+| `auth:session-changed` / `ucjc:session:changed` | `ucjc:identidad:sesion-cambiada@1` |
+| `isAuthenticated` / `autenticado` | `autenticado` |
+| `user` / `usuario` | `usuario` |
+| `version` dentro del `detail` | **no** forma parte de `@1` (la versión va en el **nombre** del evento con `@1`) |
+
+## Conflictos de aula y resolución adoptada en `@1`
+
+| Tema | Posiciones | Resolución en este contrato |
+| --- | --- | --- |
+| Privacidad vs historial | Identidad prefería id anónimo; Datos necesita identificar pedidos | Con sesión activa, **`usuario.id` y `usuario.email` son obligatorios** (email legible para la UI de Datos). No basta un id opaco sin email si Datos debe mostrar «User: …@…». |
+| Logout | Plenario | Si `autenticado` es `false`, Datos **limpia** la lista visible de pedidos. |
+
+Si Identidad no acepta email obligatorio, abrir Issue `conflicto` y no marcar `firmado`.
+
+## Responsables que aprueban
 
 | Equipo | Rol | Nombre del responsable | Fecha | Firma / visto bueno |
 | --- | --- | --- | --- | --- |
-| Identidad | Emisor | *(pendiente — falta firma en Hoja B)* | | propuesto; confirmar en este PR |
-| Datos A | Consumidor | Hans Jefferson Arauco Sanchez | 2026-10-26 | Hoja B en papel (firma Datos); revisión GitHub pendiente |
+| Identidad | Emisor | Sebastián Blanco (u otro responsable vigente) | pendiente | confirmar en el PR |
+| Datos A | Consumidor | Hans Jefferson Arauco Sanchez | pendiente | confirmar en el PR |
+| Compra | Consumidor | Adrián Pingarrón (u otro responsable vigente) | pendiente | confirmar en el PR |
+| Datos B | Consumidor | pendiente | pendiente | cuando exista equipo |
 
 ## Estado del contrato
 
-Marcad **uno**:
+- [x] `propuesto`
+- [ ] `firmado`
+- [ ] `deprecado`
 
-- [x] `propuesto` — borrador en negociación; aún no se implementa como referencia.
-- [ ] `firmado` — aprobado por emisor y consumidores; es la referencia compartida.
-- [ ] `deprecado` — sustituido por una versión nueva; se mantiene temporalmente por compatibilidad.
+## Criterio para pasar a `firmado`
+
+1. Identidad confirma nombre del evento y forma del `detail` (incluida la obligación de `email` con sesión).
+2. Datos A confirma que puede filtrar y limpiar «Mis pedidos».
+3. Compra confirma que puede usar `usuario.id` como `usuarioId` al confirmar pedidos (o abre Issue si necesita más campos).
+4. El profesor marca `firmado` y fusiona.
 
 ## Historial
 
-- `2026-11-02` — Transcripción docente a partir de la Hoja B Datos↔Identidad y del README de `tienda-ucjc-datos` (Datos A). Estado `propuesto`.
-- Conflicto abierto en aula (Hoja B): Identidad prefería un id anónimo; Datos necesita al menos `id` o `email` legible para el historial. Esta propuesta incluye `user.id` y `user.email` obligatorios si hay sesión. Debe confirmarse con Identidad.
-- Plenario: al cerrar sesión, Datos limpia la vista de pedidos.
+- `2026-10-26` — Negociación en aula (Hoja B Datos↔Identidad); firma en papel de Datos; falta firma de Identidad.
+- `2026-11-02` — Redacción canónica (nombre con pieza `identidad`, campos en español, `@1`, sin `version` en el payload) unificando borradores de Identidad, Compra y Datos A.

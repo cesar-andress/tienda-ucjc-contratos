@@ -1,21 +1,4 @@
-# Contrato: ucjc:compra:pedido-confirmado@1
-
-## Para verificar y dar el OK (Datos A — Hans)
-
-Compara con tu Hoja B Datos↔Compra y tu README. Marca en el **comentario del Pull Request** (no edites este fichero salvo que el profesor te lo pida).
-
-- [ ] Nombre del evento correcto: `ucjc:compra:pedido-confirmado@1`
-- [ ] Emisor = Compra; consumidor = Datos
-- [ ] Campos: `orderId`, `userId`, `createdAt`, `total`, `items[]` (`productId`, `name`, `price`, `quantity`) — todos obligatorios
-- [ ] El ejemplo JSON coincide con la tabla
-- [ ] Mantengo que `orderId` lo envía Compra (conflicto de aula)
-- [ ] Estado `propuesto` OK hasta firma de Compra
-
-Si todo encaja, comenta en el PR: `Confirmo que el equipo Datos acepta ucjc:compra:pedido-confirmado@1 según lo acordado en clase.`
-
-Si algo falla, indica **campo concreto** y el valor que quieres.
-
----
+# Contrato: `ucjc:compra:pedido-confirmado@1`
 
 ## Nombre del evento
 
@@ -23,76 +6,118 @@ Si algo falla, indica **campo concreto** y el valor que quieres.
 ucjc:compra:pedido-confirmado@1
 ```
 
+Nombre de fichero: `ucjc-compra-pedido-confirmado@1.md`
+
 ## Versión
 
 | Campo | Valor |
 | --- | --- |
-| Versión del evento | `1` |
-| ¿Sustituye a una versión anterior? | `no` |
+| Versión del contrato del evento | `1` |
+| ¿Sustituye a una versión anterior? | no |
 
 ## Equipo emisor
 
-Compra
+**Compra**
 
 ## Equipos consumidores
 
-- Datos (variante A — Hans Jefferson Arauco Sanchez)
-- Datos (variante B — cuando exista equipo/repo; pendiente de confirmar)
+- **Datos** (variante A — Hans Jefferson Arauco Sanchez / `tienda-ucjc-datos`)
+- **Datos** (variante B — cuando publiquen repo; deben confirmar en el PR o en uno posterior)
+
+Otros equipos no consumen este evento en `@1`.
 
 ## Descripción
 
-Compra emite este evento cuando el usuario confirma un pedido. Datos lo escucha para persistirlo (simulado) y mostrarlo en «Mis pedidos».
+Compra emite este evento **después** de que el usuario confirma el pedido (fin del checkout).  
+Datos lo escucha para **persistir** el pedido (simulado) y mostrarlo en «Mis pedidos».
 
-## Campos y tipos
+El identificador del pedido (`pedidoId`) lo genera y envía **Compra** en el mismo evento. Datos no inventa el id en el mismo ciclo asíncrono.
+
+## Campos y tipos (`event.detail`)
 
 | Campo | Tipo | Obligatorio / opcional | Descripción |
 | --- | --- | --- | --- |
-| `orderId` | texto | obligatorio | Identificador único del pedido (lo aporta Compra al emitir). |
-| `userId` | texto | obligatorio | Identificador del usuario que confirma el pedido. |
-| `createdAt` | texto (ISO 8601) | obligatorio | Momento de confirmación del pedido. |
-| `total` | número | obligatorio | Importe total del pedido. |
-| `items` | lista de objetos | obligatorio | Líneas del pedido. Cada elemento: `productId` (texto), `name` (texto), `price` (número), `quantity` (número), todos obligatorios. |
+| `pedidoId` | texto | obligatorio | Identificador único del pedido, generado por Compra. |
+| `usuarioId` | texto | obligatorio | Identificador del usuario que confirma (el mismo que Identidad usa en sesión, cuando haya sesión). |
+| `creadoEn` | texto (ISO 8601) | obligatorio | Instantánea de la confirmación. |
+| `total` | número | obligatorio | Importe total del pedido en la misma moneda que usan las líneas (euros, sin símbolo). |
+| `lineas` | lista de objetos | obligatorio | Líneas del pedido. Puede ser lista vacía solo en pruebas; en flujo real tendrá al menos un elemento. |
+
+### Elementos de `lineas[]`
+
+| Campo | Tipo | Obligatorio / opcional | Descripción |
+| --- | --- | --- | --- |
+| `productoId` | texto | obligatorio | Id de producto (el que viajó desde Descubrimiento → Compra). |
+| `nombre` | texto | obligatorio | Nombre para mostrar en «Mis pedidos». |
+| `precio` | número | obligatorio | Precio unitario. |
+| `cantidad` | número | obligatorio | Unidades (≥ 1 en flujo real). |
 
 ## Campos obligatorios y opcionales
 
-- **Obligatorios:** `orderId`, `userId`, `createdAt`, `total`, `items`
+- **Obligatorios:** `pedidoId`, `usuarioId`, `creadoEn`, `total`, `lineas` (y dentro de cada línea: `productoId`, `nombre`, `precio`, `cantidad`)
 - **Opcionales:** ninguno en `@1`
 
 ## Ejemplo de payload
 
 ```json
 {
-  "orderId": "PED-2026-0042",
-  "userId": "u-123",
-  "createdAt": "2026-10-28T16:40:00+01:00",
+  "pedidoId": "PED-2026-0042",
+  "usuarioId": "u-123",
+  "creadoEn": "2026-10-28T16:40:00+01:00",
   "total": 39.98,
-  "items": [
+  "lineas": [
     {
-      "productId": "prod-101",
-      "name": "Camiseta UCJC",
-      "price": 19.99,
-      "quantity": 2
+      "productoId": "prod-101",
+      "nombre": "Camiseta UCJC",
+      "precio": 19.99,
+      "cantidad": 2
     }
   ]
 }
 ```
 
-## Responsables que aprobaron el contrato
+## Correspondencia con borradores previos (no usar en código)
+
+| Borrador antiguo | Canónico `@1` |
+| --- | --- |
+| `ucjc:compra:pedido-confirmado:v1` (README Compra) | `ucjc:compra:pedido-confirmado@1` |
+| `order:confirmed` / sin `@n` (README Datos A) | `ucjc:compra:pedido-confirmado@1` |
+| `orderId` / `pedidoId` | `pedidoId` |
+| `userId` / `usuarioId` | `usuarioId` |
+| `createdAt` / `fecha` / `timestamp` | `creadoEn` |
+| `items` / `lineas` | `lineas` |
+| `productId`·`name`·`price`·`quantity` | `productoId`·`nombre`·`precio`·`cantidad` |
+
+## Conflictos de aula y resolución adoptada en `@1`
+
+| Tema | Posiciones | Resolución en este contrato |
+| --- | --- | --- |
+| Quién genera el id del pedido | Compra quería emitir sin id; Datos no puede devolver id en el mismo ciclo de evento | **Compra genera `pedidoId` y lo envía** en el `detail` |
+
+Si Compra no acepta esta resolución, abrir Issue `conflicto` y **no** marcar el contrato como `firmado`.
+
+## Responsables que aprueban
 
 | Equipo | Rol | Nombre del responsable | Fecha | Firma / visto bueno |
 | --- | --- | --- | --- | --- |
-| Compra | Emisor | *(pendiente — falta firma en Hoja B)* | | propuesto; confirmar en este PR |
-| Datos A | Consumidor | Hans Jefferson Arauco Sanchez | 2026-10-26 | Hoja B en papel (firma Datos); revisión GitHub pendiente |
+| Compra | Emisor | Adrián Pingarrón (u otro responsable vigente) | pendiente | confirmar en el PR |
+| Datos A | Consumidor | Hans Jefferson Arauco Sanchez | pendiente | confirmar en el PR |
+| Datos B | Consumidor | pendiente de equipo/repo | pendiente | confirmar cuando exista |
 
 ## Estado del contrato
 
-Marcad **uno**:
+- [x] `propuesto` — texto de referencia en negociación; los equipos alinean README/código hacia este texto.
+- [ ] `firmado` — emisor y consumidores han confirmado en el PR (o Hoja B + comentario); el profesor puede fusionar.
+- [ ] `deprecado`
 
-- [x] `propuesto` — borrador en negociación; aún no se implementa como referencia.
-- [ ] `firmado` — aprobado por emisor y consumidores; es la referencia compartida.
-- [ ] `deprecado` — sustituido por una versión nueva; se mantiene temporalmente por compatibilidad.
+## Criterio para pasar a `firmado`
+
+1. Compra confirma el nombre del evento, los campos y que emitirá `pedidoId`.
+2. Datos A (Hans) confirma que con este `detail` puede persistir y pintar «Mis pedidos».
+3. (Opcional pero deseable) Datos B confirma o deja Issue de discrepancia.
+4. El profesor marca `firmado` en este fichero y hace merge a `main`.
 
 ## Historial
 
-- `2026-11-02` — Transcripción docente a partir de la Hoja B Datos↔Compra y del README de `tienda-ucjc-datos` (Datos A), para que Hans revise el flujo de PR. Estado `propuesto`.
-- Conflicto abierto en aula (Hoja B): Compra pretendía emitir sin `orderId` y que Datos lo generara; Datos exige `orderId` en el evento (asíncrono). Esta propuesta sigue la posición de Datos (`orderId` obligatorio). Debe confirmarse con Compra.
+- `2026-10-26` — Negociación en aula (Hoja B Datos↔Compra); firma en papel de Datos; falta firma de Compra.
+- `2026-11-02` — Redacción canónica en este repositorio (campos en español, sufijo `@1`, resolución del conflicto de `pedidoId`) a partir de Hoja B + README de Datos A + borrador de Compra.
