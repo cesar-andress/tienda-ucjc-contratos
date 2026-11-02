@@ -22,7 +22,7 @@ Nombre de fichero: `ucjc-compra-pedido-confirmado@1.md`
 ## Equipos consumidores
 
 - **Datos** (variante A — Hans Jefferson Arauco Sanchez / `tienda-ucjc-datos`)
-- **Datos** (variante B — cuando publiquen repo; deben confirmar en el PR o en uno posterior)
+- **Datos** (variante B — Juan Pedro Faba Prados / `Juampee/ucjc-datos-alt2`; deben confirmar en el PR)
 
 Otros equipos no consumen este evento en `@1`.
 
@@ -83,11 +83,13 @@ El identificador del pedido (`pedidoId`) lo genera y envía **Compra** en el mis
 | `ucjc:compra:pedido-confirmado:v1` (README Compra) | `ucjc:compra:pedido-confirmado@1` |
 | `ucjc:compra:añadir@1` (Hoja B Compra↔Datos, entrega Rodrigo; solo `pedidoID`) | `ucjc:compra:pedido-confirmado@1` — el verbo correcto es **pedido-confirmado** (checkout), no «añadir». El `detail` lleva el pedido completo, no solo el id. |
 | `order:confirmed` / sin `@n` (README Datos A) | `ucjc:compra:pedido-confirmado@1` |
+| `ucjc:compra:pedido-creado@1` (CONTRATOS.md Datos B) | `ucjc:compra:pedido-confirmado@1` — mismo momento de negocio (checkout); el verbo canónico es **pedido-confirmado** |
 | `orderId` / `pedidoId` / `pedidoID` | `pedidoId` |
 | `userId` / `usuarioId` | `usuarioId` |
 | `createdAt` / `fecha` / `timestamp` | `creadoEn` |
 | `items` / `lineas` | `lineas` |
 | `productId`·`name`·`price`·`quantity` | `productoId`·`nombre`·`precio`·`cantidad` |
+| Solo `pedidoId` + `total` (CONTRATOS.md Datos B) | insuficiente: hacen falta también `usuarioId`, `creadoEn` y `lineas[]` |
 
 ## Conflictos de aula y resolución adoptada en `@1`
 
@@ -104,7 +106,7 @@ Si Compra no acepta esta resolución, abrir Issue `conflicto` y **no** marcar el
 | --- | --- | --- | --- | --- |
 | Compra | Emisor | Adrián Pingarrón (u otro responsable vigente) | pendiente | confirmar en el PR |
 | Datos A | Consumidor | Hans Jefferson Arauco Sanchez | pendiente | confirmar en el PR |
-| Datos B | Consumidor | pendiente de equipo/repo | pendiente | confirmar cuando exista |
+| Datos B | Consumidor | Juan Pedro Faba Prados | pendiente | confirmar en el PR |
 
 ## Estado del contrato
 
@@ -124,3 +126,4 @@ Si Compra no acepta esta resolución, abrir Issue `conflicto` y **no** marcar el
 - `2026-10-26` — Negociación en aula (Hoja B Datos↔Compra); firma en papel de Datos; falta firma de Compra.
 - `2026-11-02` — Redacción canónica en este repositorio (campos en español, sufijo `@1`, resolución del conflicto de `pedidoId`) a partir de Hoja B + README de Datos A + borrador de Compra.
 - `2026-11-02` — Entrega Compra (Rodrigo / ZIP hojas A–C): Hoja B↔Datos con `añadir@1` + solo `pedidoID` mapeada a este contrato; el README del equipo ya estaba más cerca del canónico.
+- `2026-11-02` — Datos B (`ucjc-datos-alt2`): aparece como consumidor; su `pedido-creado@1` se mapea a este contrato.
