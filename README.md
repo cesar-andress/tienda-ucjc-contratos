@@ -15,7 +15,7 @@ Nadie programa la tienda entera. Cada equipo posee una pieza y solo esa pieza.
 | **Descubrimiento** | Catálogo de productos, búsqueda y ficha. |
 | **Compra** | Carrito y proceso de compra. |
 | **Identidad** | Usuario y sesión. |
-| **Datos** | Pedidos y persistencia simulada. |
+| **Datos** | Pedidos y persistencia simulada (variantes A/B en el mismo hueco del shell). |
 
 Los equipos **no** pueden abrir ni importar el código de otro micro-frontend. La única referencia compartida entre piezas son los contratos aprobados en este repositorio.
 
@@ -27,7 +27,14 @@ Aquí se documenta **qué eventos** puede emitir o escuchar cada pieza y **qué 
 - El código de cada equipo implementa lo firmado; no inventa campos ni nombres por su cuenta.
 - El shell no conoce el interior de las piezas: solo carga releases y deja que los eventos circulen por `window`.
 
-La carpeta [`eventos/`](eventos/) empieza vacía a propósito. Los contratos se escriben **después** de negociarlos en clase, no antes.
+En `main`, la carpeta [`eventos/`](eventos/) solo tiene el índice vacío hasta que un contrato pase a **`firmado`**.  
+Negociación actual (02/11/2026): [Pull Request #2](https://github.com/cesar-andress/tienda-ucjc-contratos/pull/2) con tres eventos en estado **`propuesto`**:
+
+- `ucjc:compra:pedido-confirmado@1`
+- `ucjc:identidad:sesion-cambiada@1`
+- `ucjc:descubrimiento:anadir-al-carrito@1`
+
+Los responsables de cada equipo confirman OK/NO en ese PR. Tras los OK, el profesor marca `firmado` y fusiona a `main`.
 
 ## Qué es un contrato entre micro-frontends
 
