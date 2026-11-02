@@ -30,3 +30,4 @@ En el Pull Request correspondiente, el responsable de cada equipo afectado deja 
 | --- | --- | --- |
 | [`ucjc:compra:pedido-confirmado@1`](ucjc-compra-pedido-confirmado@1.md) | Compra | propuesto |
 | [`ucjc:identidad:sesion-cambiada@1`](ucjc-identidad-sesion-cambiada@1.md) | Identidad | propuesto |
+| [`ucjc:descubrimiento:anadir-al-carrito@1`](ucjc-descubrimiento-anadir-al-carrito@1.md) | Descubrimiento | propuesto |

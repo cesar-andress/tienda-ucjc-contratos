@@ -94,6 +94,7 @@ Datos lo usa para filtrar «Mis pedidos» por `usuario.id` y para **vaciar la vi
 | `permisos` / `roles` (Hoja B Identidad) | **no** van en el `detail` de `@1` (se gestionan dentro de la pieza Identidad) |
 | `isAuthenticated` / `autenticado` | `autenticado` |
 | `user` / `usuario` | `usuario` |
+| `usuarioId` + `nombre` planos (README Compra) | van **dentro** de `usuario` (`usuario.id`, `usuario.nombre`); el top-level es `autenticado` + `usuario` / `null` |
 | `version` dentro del `detail` | **no** forma parte de `@1` (la versión va en el **nombre** del evento con `@1`) |
 | `ucjc:sesion-solicitada:v1` / `ucjc:sesion-consultada:v1` (README Identidad) | **fuera de este contrato**; si hacen falta, otro PR con nombre `ucjc:identidad:…@1` |
 
