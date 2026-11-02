@@ -86,12 +86,16 @@ Datos lo usa para filtrar «Mis pedidos» por `usuario.id` y para **vaciar la vi
 
 | Borrador antiguo | Canónico `@1` |
 | --- | --- |
+| `Sesiones guardadas ()` (Hoja B Identidad↔Datos, entrega Sebastián) | `ucjc:identidad:sesion-cambiada@1` |
 | `ucjc:sesion-cambiada:v1` (README Identidad) | `ucjc:identidad:sesion-cambiada@1` |
 | `ucjc:identidad:sesion-cambiada:v1` (README Compra) | `ucjc:identidad:sesion-cambiada@1` |
 | `auth:session-changed` / `ucjc:session:changed` | `ucjc:identidad:sesion-cambiada@1` |
+| `ID` / `datos del usuario` (Hoja B Identidad) | `usuario.id` + `usuario.email` (+ `usuario.nombre` opcional) |
+| `permisos` / `roles` (Hoja B Identidad) | **no** van en el `detail` de `@1` (se gestionan dentro de la pieza Identidad) |
 | `isAuthenticated` / `autenticado` | `autenticado` |
 | `user` / `usuario` | `usuario` |
 | `version` dentro del `detail` | **no** forma parte de `@1` (la versión va en el **nombre** del evento con `@1`) |
+| `ucjc:sesion-solicitada:v1` / `ucjc:sesion-consultada:v1` (README Identidad) | **fuera de este contrato**; si hacen falta, otro PR con nombre `ucjc:identidad:…@1` |
 
 ## Conflictos de aula y resolución adoptada en `@1`
 
@@ -99,8 +103,9 @@ Datos lo usa para filtrar «Mis pedidos» por `usuario.id` y para **vaciar la vi
 | --- | --- | --- |
 | Privacidad vs historial | Identidad prefería id anónimo; Datos necesita identificar pedidos | Con sesión activa, **`usuario.id` y `usuario.email` son obligatorios** (email legible para la UI de Datos). No basta un id opaco sin email si Datos debe mostrar «User: …@…». |
 | Logout | Plenario | Si `autenticado` es `false`, Datos **limpia** la lista visible de pedidos. |
+| Roles / permisos en el bus | Hoja B Identidad lista `permisos` y `roles` como campos del evento | En `@1` **no** viajan por el bus. Login/registro/roles siguen siendo responsabilidad de Identidad; el evento solo avisa del cambio de sesión. Si Identidad necesita emitir roles a otras piezas, abrir Issue `conflicto` o un `@2` / evento aparte. |
 
-Si Identidad no acepta email obligatorio, abrir Issue `conflicto` y no marcar `firmado`.
+Si Identidad no acepta email obligatorio, o exige `permisos`/`roles` en el `detail`, abrir Issue `conflicto` y no marcar `firmado`.
 
 ## Responsables que aprueban
 
@@ -128,3 +133,4 @@ Si Identidad no acepta email obligatorio, abrir Issue `conflicto` y no marcar `f
 
 - `2026-10-26` — Negociación en aula (Hoja B Datos↔Identidad); firma en papel de Datos; falta firma de Identidad.
 - `2026-11-02` — Redacción canónica (nombre con pieza `identidad`, campos en español, `@1`, sin `version` en el payload) unificando borradores de Identidad, Compra y Datos A.
+- `2026-11-02` — Entrega Hoja B del equipo Identidad (Sebastián): nombre informal «Sesiones guardadas ()» y campos `ID` / `datos del usuario` / `permisos` / `roles`; mapeados arriba; `permisos`/`roles` quedan fuera de `@1`.
