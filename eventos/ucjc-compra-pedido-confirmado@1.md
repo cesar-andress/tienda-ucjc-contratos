@@ -118,7 +118,7 @@ Si Compra no acepta esta resolución, abrir Issue `conflicto` y **no** marcar el
 
 1. Compra confirma el nombre del evento, los campos y que emitirá `pedidoId`.
 2. Datos A (Hans) confirma que con este `detail` puede persistir y pintar «Mis pedidos».
-3. (Opcional pero deseable) Datos B confirma o deja Issue de discrepancia.
+3. Datos B confirma lo mismo (mismo hueco A/B; mismo contrato).
 4. El profesor marca `firmado` en este fichero y hace merge a `main`.
 
 ## Historial

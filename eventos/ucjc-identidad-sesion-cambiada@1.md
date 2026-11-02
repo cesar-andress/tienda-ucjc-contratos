@@ -22,8 +22,8 @@ Nombre de fichero: `ucjc-identidad-sesion-cambiada@1.md`
 ## Equipos consumidores
 
 - **Datos** (variante A — Hans Jefferson Arauco Sanchez / `tienda-ucjc-datos`)
-- **Datos** (variante B — Juan Pedro Faba / `Juampee/ucjc-datos-alt2`; deben confirmar)
-- **Compra** (necesita saber si hay sesión para checkout; debe confirmar este contrato o uno posterior si sus campos difieren)
+- **Datos** (variante B — Juan Pedro Faba / `Juampee/ucjc-datos-alt2`)
+- **Compra** (**obligatorio** en el flujo mínimo): guarda `usuario.id` y solo confirma pedido si `autenticado === true`)
 
 ## Descripción
 

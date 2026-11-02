@@ -24,10 +24,15 @@ El fichero se llama igual, con guiones en lugar de dos puntos, por ejemplo:
 
 En el Pull Request correspondiente, el responsable de cada equipo afectado deja un comentario explícito (ver plantilla del PR). Las firmas de la Hoja B de aula siguen valiendo como evidencia académica, pero **también** hace falta la confirmación en el PR.
 
+## Flujo mínimo
+
+Con estos tres eventos basta un camino completo (login → añadir → confirmar → ver pedidos).  
+Detalle y checklist por equipo para las PRs de código: [`FLUJO-MINIMO.md`](FLUJO-MINIMO.md).
+
 ## Contratos en este árbol
 
-| Evento | Emisor | Estado |
-| --- | --- | --- |
-| [`ucjc:compra:pedido-confirmado@1`](ucjc-compra-pedido-confirmado@1.md) | Compra | propuesto |
-| [`ucjc:identidad:sesion-cambiada@1`](ucjc-identidad-sesion-cambiada@1.md) | Identidad | propuesto |
-| [`ucjc:descubrimiento:anadir-al-carrito@1`](ucjc-descubrimiento-anadir-al-carrito@1.md) | Descubrimiento | propuesto |
+| Evento | Emisor | Consumidores | Estado |
+| --- | --- | --- | --- |
+| [`ucjc:identidad:sesion-cambiada@1`](ucjc-identidad-sesion-cambiada@1.md) | Identidad | Datos A/B, Compra | propuesto |
+| [`ucjc:descubrimiento:anadir-al-carrito@1`](ucjc-descubrimiento-anadir-al-carrito@1.md) | Descubrimiento | Compra | propuesto |
+| [`ucjc:compra:pedido-confirmado@1`](ucjc-compra-pedido-confirmado@1.md) | Compra | Datos A/B | propuesto |
