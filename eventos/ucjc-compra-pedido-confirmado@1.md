@@ -81,8 +81,9 @@ El identificador del pedido (`pedidoId`) lo genera y envía **Compra** en el mis
 | Borrador antiguo | Canónico `@1` |
 | --- | --- |
 | `ucjc:compra:pedido-confirmado:v1` (README Compra) | `ucjc:compra:pedido-confirmado@1` |
+| `ucjc:compra:añadir@1` (Hoja B Compra↔Datos, entrega Rodrigo; solo `pedidoID`) | `ucjc:compra:pedido-confirmado@1` — el verbo correcto es **pedido-confirmado** (checkout), no «añadir». El `detail` lleva el pedido completo, no solo el id. |
 | `order:confirmed` / sin `@n` (README Datos A) | `ucjc:compra:pedido-confirmado@1` |
-| `orderId` / `pedidoId` | `pedidoId` |
+| `orderId` / `pedidoId` / `pedidoID` | `pedidoId` |
 | `userId` / `usuarioId` | `usuarioId` |
 | `createdAt` / `fecha` / `timestamp` | `creadoEn` |
 | `items` / `lineas` | `lineas` |
@@ -92,7 +93,8 @@ El identificador del pedido (`pedidoId`) lo genera y envía **Compra** en el mis
 
 | Tema | Posiciones | Resolución en este contrato |
 | --- | --- | --- |
-| Quién genera el id del pedido | Compra quería emitir sin id; Datos no puede devolver id en el mismo ciclo de evento | **Compra genera `pedidoId` y lo envía** en el `detail` |
+| Quién genera el id del pedido | En aula hubo duda; Datos no puede devolver id en el mismo ciclo de evento | **Compra genera `pedidoId` y lo envía** en el `detail` (coherente con el README de Compra, que ya lista `pedidoId`) |
+| Nombre «añadir» vs «pedido-confirmado» | Hoja B Compra↔Datos: `ucjc:compra:añadir@1` solo con `pedidoID`. README Compra y Datos A: pedido confirmado con líneas y total | Se adopta **`pedido-confirmado@1`** con el payload completo. «añadir» se reserva para el carrito (evento Descubrimiento→Compra), no para el checkout hacia Datos. |
 
 Si Compra no acepta esta resolución, abrir Issue `conflicto` y **no** marcar el contrato como `firmado`.
 
@@ -121,3 +123,4 @@ Si Compra no acepta esta resolución, abrir Issue `conflicto` y **no** marcar el
 
 - `2026-10-26` — Negociación en aula (Hoja B Datos↔Compra); firma en papel de Datos; falta firma de Compra.
 - `2026-11-02` — Redacción canónica en este repositorio (campos en español, sufijo `@1`, resolución del conflicto de `pedidoId`) a partir de Hoja B + README de Datos A + borrador de Compra.
+- `2026-11-02` — Entrega Compra (Rodrigo / ZIP hojas A–C): Hoja B↔Datos con `añadir@1` + solo `pedidoID` mapeada a este contrato; el README del equipo ya estaba más cerca del canónico.
