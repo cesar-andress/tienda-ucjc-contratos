@@ -1,5 +1,23 @@
 # Contrato: ucjc:identidad:sesion-cambiada@1
 
+## Para verificar y dar el OK (Datos A — Hans)
+
+Compara con tu Hoja B Datos↔Identidad y tu README. Marca en el **comentario del Pull Request**.
+
+- [ ] Nombre del evento correcto: `ucjc:identidad:sesion-cambiada@1`
+- [ ] Emisor = Identidad; consumidor = Datos
+- [ ] Campos: `isAuthenticated`; `user` obligatorio si autenticado; `user.id` y `user.email` obligatorios dentro de `user`
+- [ ] Ejemplos de sesión abierta y cerrada correctos
+- [ ] Al logout, Datos limpia «Mis pedidos»
+- [ ] Mantengo `id` + `email` legibles (conflicto con id anónimo)
+- [ ] Estado `propuesto` OK hasta firma de Identidad
+
+Si todo encaja, comenta en el PR: `Confirmo que el equipo Datos acepta ucjc:identidad:sesion-cambiada@1 según lo acordado en clase.`
+
+Si algo falla, indica **campo concreto** y el valor que quieres.
+
+---
+
 ## Nombre del evento
 
 ```text
