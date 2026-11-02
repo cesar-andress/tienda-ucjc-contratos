@@ -97,6 +97,7 @@ Datos lo usa para filtrar «Mis pedidos» por `usuario.id` y para **vaciar la vi
 | `usuarioId` + `nombre` planos (README Compra) | van **dentro** de `usuario` (`usuario.id`, `usuario.nombre`); el top-level es `autenticado` + `usuario` / `null` |
 | `version` dentro del `detail` | **no** forma parte de `@1` (la versión va en el **nombre** del evento con `@1`) |
 | `ucjc:sesion-solicitada:v1` / `ucjc:sesion-consultada:v1` (README Identidad) | **fuera de este contrato**; si hacen falta, otro PR con nombre `ucjc:identidad:…@1` |
+| `ucjc:identidad:envían` (Hoja B Descubrimiento↔Identidad; ids + tipo de usuario) | **no** es este contrato y **no** entra en el paquete `@1`. Descubrimiento no necesita un bus propio de «tipo de usuario» para el catálogo; si más adelante hace falta rol en UI, otro PR |
 
 ## Conflictos de aula y resolución adoptada en `@1`
 
@@ -135,3 +136,4 @@ Si Identidad no acepta email obligatorio, o exige `permisos`/`roles` en el `deta
 - `2026-10-26` — Negociación en aula (Hoja B Datos↔Identidad); firma en papel de Datos; falta firma de Identidad.
 - `2026-11-02` — Redacción canónica (nombre con pieza `identidad`, campos en español, `@1`, sin `version` en el payload) unificando borradores de Identidad, Compra y Datos A.
 - `2026-11-02` — Entrega Hoja B del equipo Identidad (Sebastián): nombre informal «Sesiones guardadas ()» y campos `ID` / `datos del usuario` / `permisos` / `roles`; mapeados arriba; `permisos`/`roles` quedan fuera de `@1`.
+- `2026-11-02` — Entrega Descubrimiento (Daniel): Hoja B↔Identidad con `ucjc:identidad:envían`; documentado como fuera de `@1`.

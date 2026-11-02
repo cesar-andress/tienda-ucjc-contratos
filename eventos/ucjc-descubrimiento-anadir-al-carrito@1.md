@@ -58,18 +58,21 @@ Compra lo escucha, actualiza el carrito local y (si quiere) puede emitir despué
 | Borrador antiguo | Canónico `@1` |
 | --- | --- |
 | `ucjc:descubrir:añadir@1` (Hoja B Compra↔Descubrimiento) | `ucjc:descubrimiento:anadir-al-carrito@1` (pieza completa `descubrimiento`, verbo claro) |
+| `ucjc:descubrimiento:envían` (Hoja B Descubrimiento↔«Carrito», entrega Daniel) | `ucjc:descubrimiento:anadir-al-carrito@1` — el verbo no es «envían»; hay que nombrar la acción |
 | `ucjc:descubrimiento:anadir-al-carrito:v1` (README Compra) | `ucjc:descubrimiento:anadir-al-carrito@1` |
-| `productoID` / `productoId` | `productoId` |
-| `cantidadDisp` (Hoja B) | **no** va en `@1`; Compra no necesita stock para pintar el carrito. Si Descubrimiento quiere avisar stock, otro campo/opcional en `@2` o evento aparte |
-| `cantidad` (README Compra) | `cantidad` |
+| `ProductoID` / `productoID` / `productoId` | `productoId` |
+| `cantidadDisp` (Hoja B Compra) | **no** va en `@1` |
+| `Cantidad` / `cantidad` | `cantidad` |
+| `ucjc:carrito:envían` / `ucjc:comprar:añadir@1` (inverso hacia Descubrimiento) | **fuera de este PR** (ver conflictos) |
 
 ## Conflictos de aula y resolución adoptada en `@1`
 
 | Tema | Posiciones | Resolución en este contrato |
 | --- | --- | --- |
-| Nombre de pieza | Hoja B: `descubrir`; README Compra: `descubrimiento` | Pieza **`descubrimiento`** (nombre oficial del equipo) |
-| Evento inverso Compra→Descubrimiento | Hoja B: `ucjc:comprar:añadir@1` con `cantidadPed`, `cantidadProd` | **No entra en este PR.** Para v0.2 el stock puede quedarse dentro de Descubrimiento. Si hace falta avisar cantidades pedidas, otro contrato cuando Descubrimiento confirme (con `productoId` obligatorio). |
-| Solo `pedidoID` hacia Datos | Hoja B Compra↔Datos mezclaba «añadir» con Datos | Ese flujo es **`ucjc:compra:pedido-confirmado@1`**, no este evento |
+| Nombre de pieza | Hoja B Compra: `descubrir`; Descubrimiento dice «Carrito» | Pieza emisora **`descubrimiento`**; consumidor **`compra`** (no «carrito») |
+| Verbo «envían» | Hoja B Descubrimiento | Se adopta **`anadir-al-carrito`** (acción concreta, español sin tilde en el token del nombre de fichero) |
+| Evento inverso Compra→Descubrimiento | Hojas Compra y Descubrimiento (`comprar:añadir` / `carrito:envían` con añadir/quitar/cantidad) | **No entra en este PR.** Stock y catálogo se quedan en Descubrimiento para v0.2 |
+| Solo `pedidoID` hacia Datos | Hoja B Compra↔Datos | Ese flujo es **`ucjc:compra:pedido-confirmado@1`**, no este evento |
 
 Si Descubrimiento o Compra no aceptan el nombre o los campos, abrir Issue `conflicto` y no marcar `firmado`.
 
@@ -96,3 +99,4 @@ Si Descubrimiento o Compra no aceptan el nombre o los campos, abrir Issue `confl
 
 - `2026-10-26` — Negociación en aula (Hoja B Compra↔Descubrimiento); entrega PDF del equipo Compra (31/10).
 - `2026-11-02` — Redacción canónica a partir de Hoja B + README de Compra; se deja fuera el evento inverso hacia Descubrimiento.
+- `2026-11-02` — Entrega Descubrimiento (Daniel): Hoja B↔Carrito con `…:envían`; mapeada a este contrato.
