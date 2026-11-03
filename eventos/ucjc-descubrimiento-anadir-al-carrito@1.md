@@ -62,8 +62,8 @@ Se emite cuando el usuario hace clic en el botón de añadir un producto al carr
 | `Compra` | Consumidor | | | |
 
 ## Estado del contrato
-- [ ] `propuesto`
-- [x] `firmado`
+- [x] `propuesto`
+- [ ] `firmado`
 - [ ] `deprecado`
 
 ## Historial
