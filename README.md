@@ -2,9 +2,31 @@
 
 Repositorio central de **contratos de eventos** de la práctica **Tienda UCJC** (Desarrollo de Front-End, UCJC, curso 2026/2027).
 
+**Repositorio (público):** https://github.com/cesar-andress/tienda-ucjc-contratos  
+**Shell en vivo:** https://cesar-andress.github.io/tienda-ucjc-shell/
+
+## Situación actual (04/11/2026)
+
+| Hecho | Estado |
+| --- | --- |
+| Este repositorio | **Público** (lectura para todos; escritura solo el profesor) |
+| Carpeta [`eventos/`](eventos/) en `main` | Hay un [ejemplo de formato](eventos/EJEMPLO-como-rellenar.md) (**no implementar**). Aún **no** están los tres contratos firmados. |
+| Negociación en clase | OK oral por equipo; el profesor deja después los ficheros `firmado` en `eventos/` |
+| PRs abiertas de alumnos | #4 (Descubrimiento), #5 (Compra), #6 (Datos; ficheros fuera de `eventos/`). **No** se fusionan tal cual si no cuadran con el flujo mínimo. |
+
+### Los tres mensajes del flujo mínimo (nombres canónicos)
+
+```text
+ucjc:identidad:sesion-cambiada@1
+ucjc:descubrimiento:anadir-al-carrito@1
+ucjc:compra:pedido-confirmado@1
+```
+
+El `@1` es la versión del **contrato del evento**. No es lo mismo que el tag de la pieza (`v0.2.0`, `v1.0.0`, …) ni que el `0.0.0` de los rellenos del shell.
+
 ## Qué es Tienda UCJC
 
-Tienda UCJC es una tienda web de campus construida por cuatro equipos independientes. Cada equipo desarrolla y publica su propio micro-frontend. El shell del profesor los carga en tiempo de ejecución y los une en una sola experiencia de usuario.
+Tienda UCJC es una tienda web de campus construida por cuatro equipos independientes. Cada equipo desarrolla y publica su propio micro-frontend. El shell del profesor los carga en tiempo de ejecución.
 
 Nadie programa la tienda entera. Cada equipo posee una pieza y solo esa pieza.
 
@@ -23,173 +45,85 @@ Los equipos **no** pueden abrir ni importar el código de otro micro-frontend. L
 
 Aquí se documenta **qué eventos** puede emitir o escuchar cada pieza y **qué campos** viajan en cada evento.
 
-- Si un acuerdo no está escrito aquí, **no existe** para la tienda.
+- Si el Markdown no está en [`eventos/`](eventos/) de `main`, **no existe** para la tienda.
 - El código de cada equipo implementa lo firmado; no inventa campos ni nombres por su cuenta.
-- El shell no conoce el interior de las piezas: solo carga releases y deja que los eventos circulen por `window`.
+- El shell no conoce el interior de las piezas: solo carga releases y deja circular los eventos por `window`.
 
-En `main`, la carpeta [`eventos/`](eventos/) tiene un [ejemplo de cómo rellenar](eventos/EJEMPLO-como-rellenar.md) (marcado como **no implementar**) y la [plantilla](PLANTILLA-EVENTO.md) en la raíz. Los contratos reales solo entran cuando pasan a **`firmado`**.
-
-Negociación abierta (PRs de alumnos; el PR #2 del profesor se cerró sin fusionar):
-
-- `#4` — `ucjc:descubrimiento:anadir-al-carrito@1`
-- `#5` — `ucjc:compra:pedido-confirmado@1`
-- `#6` — propuesta de Datos (ficheros mal ubicados: deben ir en `eventos/`)
-
-En clase: OK oral por equipo; el profesor deja los tres contratos firmados en `main`.
+Plantilla: [`PLANTILLA-EVENTO.md`](PLANTILLA-EVENTO.md).  
+Cómo se ve un fichero relleno: [`eventos/EJEMPLO-como-rellenar.md`](eventos/EJEMPLO-como-rellenar.md).
 
 ## Qué es un contrato entre micro-frontends
 
-Un contrato es el acuerdo escrito entre el equipo que **emite** un evento y el equipo (o equipos) que lo **consumen**.
+Acuerdo escrito entre quien **emite** un evento y quien lo **consume**. Incluye, como mínimo:
 
-Incluye, como mínimo:
-
-- el nombre del evento,
-- su versión de contrato (`@n`),
-- quién emite y quién consume,
-- la descripción de cuándo se dispara,
-- los campos del `detail`, con tipo y carácter obligatorio u opcional,
-- un ejemplo de payload,
+- nombre del evento y versión `@n`,
+- emisor y consumidores,
+- cuándo se dispara,
+- campos de `detail` (tipo, obligatorio/opcional),
+- ejemplo de payload,
 - quién lo aprobó,
-- el estado del contrato (`propuesto`, `firmado`, `deprecado`).
+- estado: `propuesto` · `firmado` · `deprecado`.
 
-Sin contrato firmado no hay integración fiable: un cambio de nombre o de tipo en un campo rompe a quien escucha, aunque el código de cada lado “funcione” por separado.
-
-## Convención de nombres de eventos
-
-Formato obligatorio:
+## Convención de nombres
 
 ```text
 ucjc:<pieza>:<verbo>@<n>
 ```
 
-- Minúsculas, en español, sin espacios.
-- El sufijo `@n` es la **versión del contrato del evento**, no la versión `vX.Y.Z` del micro-frontend.
-- Así pueden convivir dos versiones de contrato mientras los consumidores migran.
-
-Ejemplo **ilustrativo** (no es un contrato definitivo; no lo copies a `eventos/` como si ya estuviera aprobado):
-
-```text
-ucjc:descubrimiento:añadir@1
-```
-
-### Versión del contrato (`@n`) frente a versión de la release (`vX.Y.Z`)
-
-Son dos números distintos:
+Minúsculas, en español, sin espacios. El `@n` **no** es la release `vX.Y.Z` del micro-frontend.
 
 | Concepto | Ejemplo | Qué identifica |
 | --- | --- | --- |
-| **Contrato de evento** | `ucjc:identidad:sesion@1` → `@2` | Forma del mensaje entre piezas |
-| **Release del micro-frontend** | `v0.1.0` → `v0.2.0` → `v1.0.0` | Artefacto publicado (`remote.js`) |
-
-- Un cambio interno de UI puede ser un **parche** de release (`v0.1.0` → `v0.1.1`) **sin** tocar `@n`.
-- Añadir un campo opcional que nadie obliga a usar puede ser **menor** en la release y, si los consumidores existentes siguen válidos, **mantener** `@n`.
-- Renombrar un campo, cambiar su tipo o hacerlo obligatorio cuando ya hay consumidores suele exigir **`@n+1`** (nuevo contrato) y a menudo una release **mayor** o, como mínimo, una release nueva que emita o entienda esa versión.
-- La compatibilidad la marcan los **consumidores existentes**, no el hecho aislado de “añadir” o “quitar” un campo.
+| Contrato de evento | `…@1` | Forma del mensaje entre piezas |
+| Release del micro-frontend | `v0.2.0` | Artefacto publicado (`remote.js`) |
+| Relleno del shell | `0.0.0` en el manifest | Stub del profesor (aún no hay pieza de alumno) |
 
 No hay equivalencia automática entre `v1.0.0` y `@1`.
 
 ## Cómo se negocian los eventos
 
-1. En aula se acuerdan en papel (emisor, consumidores y campos). Las firmas de las hojas siguen siendo válidas.
-2. El equipo **emisor** transcribe lo acordado mediante un **fork + Pull Request** (véase abajo). No tenéis escritura directa en este repositorio.
-3. El nombre del fichero refleja el del evento, por ejemplo `ucjc-descubrimiento-añadir@1.md`.
-4. Los equipos **consumidores** confirman en el PR (revisión de GitHub si pueden, o comentario identificable).
-5. El **profesor** comprueba el acuerdo e integra el PR cuando procede. Solo el profesor hace el *merge*.
+1. En aula se acuerda (emisor, consumidores, campos). Hoy: **OK en voz alta**.
+2. El equipo emisor puede proponer por **fork + Pull Request** (sin push al original).
+3. El fichero va en `eventos/` con el nombre del evento.
+4. Los consumidores confirman en el PR (comentario identificable).
+5. **Solo el profesor** fusiona a `main` cuando el estado es `firmado`.
 
 Reglas:
 
-- El **nombre** del evento lo propone quien emite; los **campos** se firman entre emisor y consumidores.
-- Un evento sin al menos un consumidor confirmado es una **propuesta**, no un contrato.
-- Cada equipo solo propone ficheros de los eventos que **emite**.
+- El **nombre** lo propone quien emite; los **campos** se firman con quien consume.
+- Cada equipo solo propone eventos que **emite**.
+- No dejéis Markdown de contratos en la **raíz** del repo: solo en `eventos/`.
 
 ## Modelo de contribución: fork + Pull Request
 
-**No podéis hacer `git push` al repositorio del profesor.** Trabajáis así:
+**No podéis hacer `git push` a este repositorio.** Flujo: fork → rama → PR hacia `main` → el profesor fusiona.
 
-| Concepto | Significado |
-| --- | --- |
-| **Repositorio original** | `cesar-andress/tienda-ucjc-contratos` (solo lectura para alumnos) |
-| **Fork** | Copia del repo bajo **vuestra** cuenta de GitHub |
-| **Rama de trabajo** | Rama en vuestro fork, p. ej. `contrato/ucjc-identidad-sesion-1` |
-| **Pull Request (PR)** | Petición para integrar vuestra rama en `main` del original |
-| **Revisión** | Comentarios y confirmaciones de los equipos afectados |
-| **Merge** | Integración en `main`; la hace solo el profesor |
-
-### Procedimiento paso a paso
-
-1. Entrad en https://github.com/cesar-andress/tienda-ucjc-contratos
-2. Pulsad **Fork** y cread la copia en vuestra cuenta (o en la organización del equipo).
-3. Clonad **vuestro fork** (o editad en la web de GitHub).
-4. Cread la rama `contrato/<nombre-del-evento>` (sin espacios).
-5. Copiad [`PLANTILLA-EVENTO.md`](PLANTILLA-EVENTO.md) a `eventos/<nombre-del-evento>.md`.
-6. Rellenad **solo** los contratos que emite vuestro equipo.
-7. Haced un commit con mensaje **en español**.
-8. Subid la rama a **vuestro fork** (`git push -u origin contrato/...`).
-9. Abrid un Pull Request: base = `cesar-andress/tienda-ucjc-contratos` → `main`; compare = vuestra rama del fork.
-10. En el PR indicad equipos consumidores y usad la plantilla.
-11. Pedid a los responsables consumidores que confirmen (véase firmas).
-12. Resolved comentarios y desacuerdos (o abrid una Issue `conflicto`).
-13. Esperad a que el profesor apruebe e integre.
-
-Guía operativa ampliada: [`CONTRIBUYENDO.md`](CONTRIBUYENDO.md).
-
-### Ejemplo ilustrativo (no es un contrato aprobado)
-
-Supongamos que Identidad acordó en papel un evento de sesión:
-
-1. Fork de `tienda-ucjc-contratos` a la cuenta del responsable.
-2. Rama `contrato/ucjc-identidad-sesion-1`.
-3. Fichero propuesto: `eventos/ucjc-identidad-sesion@1.md` (rellenado desde la plantilla).
-4. Commit: `Añade propuesta ucjc:identidad:sesion@1`.
-5. PR hacia `cesar-andress/tienda-ucjc-contratos` (`main`).
-6. Compra y Datos dejan en el PR: *«Confirmo que el equipo Compra acepta este contrato según lo acordado en clase»* (o el equivalente para Datos).
-7. El profesor revisa e integra si el acuerdo es coherente.
-
-Ese ejemplo **no** autoriza a copiar el evento a `eventos/` como si ya estuviera firmado en `main`.
+Detalle operativo: [`CONTRIBUYENDO.md`](CONTRIBUYENDO.md).
 
 ## Firmas y confirmaciones
 
-- Las **firmas en papel** de la negociación en aula siguen siendo válidas.
-- Además, el responsable de cada equipo **consumidor** debe dejar confirmación **explícita** en el Pull Request:
-  - una revisión de GitHub, si sus permisos lo permiten, **o**
-  - un comentario identificable, por ejemplo:  
-    `Confirmo que el equipo Compra acepta este contrato según lo acordado en clase.`
-- La confirmación académica (papel + comentario/revisión) y el botón “Approve” de GitHub **no son lo mismo**. El profesor comprueba el acuerdo real antes de fusionar.
-- **Solo el profesor** decide cuándo se hace el *merge*.
+- El OK oral (o la firma en papel) de clase sigue siendo válido.
+- En un PR, el consumidor deja un comentario explícito de aceptación.
+- El botón «Approve» de GitHub no sustituye el acuerdo académico.
+- **Solo el profesor** decide el *merge*.
 
 ## Cambios compatibles e incompatibles
 
-Cualquier alta o modificación de contrato va por fork + PR.
+- Campo opcional nuevo que no rompe a nadie: puede mantener `@n` si se documenta.
+- Renombrar campo, cambiar tipo o hacerlo obligatorio: nueva versión `@n+1`; la anterior pasa a `deprecado`.
 
-- **Cambio compatible** (p. ej. campo opcional nuevo que no rompe a quien ya consume): puede mantener `@n` si los consumidores existentes siguen siendo válidos. Documentadlo.
-- **Cambio incompatible** (renombrar campo, cambiar tipo, hacer obligatorio lo opcional, eliminar campo usado): **nueva versión** `@n+1`. La anterior queda `deprecado` al menos dos semanas si aún hay consumidores.
-
-Etiquetas útiles en Issues: `mayor`, `menor`, `parche`, `conflicto` (véase plantillas).
-
-## Cómo registrar desacuerdos mediante Issues
-
-Si no hay acuerdo, abrid una **Issue** con la plantilla de conflicto entre equipos (etiqueta `conflicto`).
-
-Dejad claro: equipos, evento, posiciones y si pedís arbitraje del profesor.
-
-## Por qué nadie debe modificar un contrato unilateralmente
-
-Un contrato firmado es una dependencia entre equipos.
-
-- No editéis `eventos/` en el original (no tenéis push).
-- No “arregléis” un campo en vuestro código sin actualizar el contrato vía PR.
-- No asumáis que un acuerdo verbal vale: **solo cuenta lo escrito y aprobado aquí**.
+Desacuerdos: Issue con etiqueta `conflicto`.
 
 ## Contenido del repositorio
 
 | Ruta | Uso |
 | --- | --- |
-| [`PLANTILLA-EVENTO.md`](PLANTILLA-EVENTO.md) | Modelo para cada contrato. |
-| [`CONTRIBUYENDO.md`](CONTRIBUYENDO.md) | Flujo día a día (fork + PR). |
-| [`eventos/`](eventos/) | Contratos aprobados (vacía al inicio). |
-| [`.github/`](.github/) | Plantillas de Issue y Pull Request. |
+| [`PLANTILLA-EVENTO.md`](PLANTILLA-EVENTO.md) | Modelo para cada contrato |
+| [`CONTRIBUYENDO.md`](CONTRIBUYENDO.md) | Fork + PR día a día |
+| [`eventos/`](eventos/) | Contratos firmados (+ ejemplo de formato) |
+| [`.github/`](.github/) | Plantillas de Issue y Pull Request |
 
-## Referencias del bloque
+## Referencias
 
-- Shell de integración: [tienda-ucjc-shell](https://github.com/cesar-andress/tienda-ucjc-shell)
-- Tienda en vivo (Pages): https://cesar-andress.github.io/tienda-ucjc-shell/
+- Shell: https://github.com/cesar-andress/tienda-ucjc-shell  
+- Tienda en vivo: https://cesar-andress.github.io/tienda-ucjc-shell/
