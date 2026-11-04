@@ -27,14 +27,15 @@ Aquí se documenta **qué eventos** puede emitir o escuchar cada pieza y **qué 
 - El código de cada equipo implementa lo firmado; no inventa campos ni nombres por su cuenta.
 - El shell no conoce el interior de las piezas: solo carga releases y deja que los eventos circulen por `window`.
 
-En `main`, la carpeta [`eventos/`](eventos/) solo tiene el índice vacío hasta que un contrato pase a **`firmado`**.  
-Negociación actual (02/11/2026): [Pull Request #2](https://github.com/cesar-andress/tienda-ucjc-contratos/pull/2) con tres eventos en estado **`propuesto`**:
+En `main`, la carpeta [`eventos/`](eventos/) tiene un [ejemplo de cómo rellenar](eventos/EJEMPLO-como-rellenar.md) (marcado como **no implementar**) y la [plantilla](PLANTILLA-EVENTO.md) en la raíz. Los contratos reales solo entran cuando pasan a **`firmado`**.
 
-- `ucjc:compra:pedido-confirmado@1`
-- `ucjc:identidad:sesion-cambiada@1`
-- `ucjc:descubrimiento:anadir-al-carrito@1`
+Negociación abierta (PRs de alumnos; el PR #2 del profesor se cerró sin fusionar):
 
-Los responsables de cada equipo confirman OK/NO en ese PR. Tras los OK, el profesor marca `firmado` y fusiona a `main`.
+- `#4` — `ucjc:descubrimiento:anadir-al-carrito@1`
+- `#5` — `ucjc:compra:pedido-confirmado@1`
+- `#6` — propuesta de Datos (ficheros mal ubicados: deben ir en `eventos/`)
+
+En clase: OK oral por equipo; el profesor deja los tres contratos firmados en `main`.
 
 ## Qué es un contrato entre micro-frontends
 
