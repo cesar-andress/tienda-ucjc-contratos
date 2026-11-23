@@ -111,8 +111,8 @@ Si Compra no acepta esta resolución, abrir Issue `conflicto` y **no** marcar el
 ## Estado del contrato
 
 - [ ] `propuesto`
-- [x] `firmado`
-- [ ] `deprecado`
+- [ ] `firmado`
+- [x] `deprecado`
 
 ## Historial
 

@@ -26,11 +26,11 @@ ucjc:compra:pedido-confirmado@1
 
 | Evento | Fichero | Estado |
 | --- | --- | --- |
-| `sesion-cambiada@1` | [`eventos/ucjc-identidad-sesion-cambiada@1.md`](eventos/ucjc-identidad-sesion-cambiada@1.md) | `firmado` |
+| `sesion-cambiada@1` | [`eventos/ucjc-identidad-sesion-cambiada@1.md`](eventos/ucjc-identidad-sesion-cambiada@1.md) | `deprecado` |
 | `anadir-al-carrito@1` | [`eventos/ucjc-descubrimiento-anadir-al-carrito@1.md`](eventos/ucjc-descubrimiento-anadir-al-carrito@1.md) | `firmado` |
 | `pedido-confirmado@1` | [`eventos/ucjc-compra-pedido-confirmado@1.md`](eventos/ucjc-compra-pedido-confirmado@1.md) | `firmado` |
 | `campana-cambiada@1` | [`eventos/ucjc-descubrimiento-campana-cambiada@1.md`](eventos/ucjc-descubrimiento-campana-cambiada@1.md) | `firmado` |
-| `pedido-confirmado@2` | [`eventos/ucjc-compra-pedido-confirmado@2.md`](eventos/ucjc-compra-pedido-confirmado@2.md) | `propuesto` |
+| `pedido-confirmado@2` | [`eventos/ucjc-compra-pedido-confirmado@2.md`](eventos/ucjc-compra-pedido-confirmado@2.md) | `firmado` |
 
 El `@1` / `@2` es la versión del **contrato del evento**. No es lo mismo que el tag de la pieza (`v0.2.0`, `v1.0.0`, …).
 

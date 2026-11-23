@@ -81,16 +81,19 @@ Igual que en `@1`: `productoId`, `nombre`, `precio`, `cantidad` (todos obligator
 
 | Equipo | Rol | Nombre del responsable | Fecha | Firma / visto bueno |
 | --- | --- | --- | --- | --- |
+| Compra | Emisor | `Adrián Pingarrón` | `2026-11-23`| `OK + próximo release`|
+| Datos A | Consumidor | | | |
 | Compra | Emisor | | | |
 | Datos A | Consumidor | Hans Jefferson Arauco Sanchez| 23/11/2026 | Firmado |
 | Datos B | Consumidor | | | |
 
 ## Estado del contrato
 
-- [x] `propuesto`
-- [ ] `firmado`
+- [ ] `propuesto`
+- [x] `firmado`
 - [ ] `deprecado`
 
 ## Historial
 
 - `2026-11-23` — Propuesta del profesor (Black Friday).
+- `2026-11-23` — Firma responsable compra.
