@@ -72,8 +72,9 @@ No cambia `anadir-al-carrito@1` ni `pedido-confirmado@1`.
 
 | Equipo | Rol | Nombre del responsable | Fecha | Firma / visto bueno |
 | --- | --- | --- | --- | --- |
-| Descubrimiento | Emisor | | | |
-| Compra | Consumidor | | | |
+| Descubrimiento | Emisor | Daniel Molina Viton | 25/11/2026 | Firmado |
+| Compra A | Consumidor | | | |
+| Compra B | Consumidor | Daniel Molina Viton | 25/11/2026 | Firmado |
 | Datos A | Consumidor | Hans Jefferson Arauco Sanchez| 23/11/2026 | Firmado |
 | Datos B | Consumidor | | | |
 
