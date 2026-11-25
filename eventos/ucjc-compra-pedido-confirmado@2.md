@@ -81,7 +81,7 @@ Igual que en `@1`: `productoId`, `nombre`, `precio`, `cantidad` (todos obligator
 
 | Equipo | Rol | Nombre del responsable | Fecha | Firma / visto bueno |
 | --- | --- | --- | --- | --- |
-| Compra | Emisor | | | |
+| Compra | Emisor | Daniel Molina Viton | 25/11/2026 | Firmado |
 | Datos A | Consumidor | Hans Jefferson Arauco Sanchez| 23/11/2026 | Firmado |
 | Datos B | Consumidor | | | |
 
