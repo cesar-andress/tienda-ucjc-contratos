@@ -167,9 +167,9 @@ Una fila por variante. La release es el tag que demuestra la conformidad.
 | Identidad A | `ucjc-ecommerce-identidad/tienda-ucjc-identidad` | | | | |
 | Identidad B | `Juampee/ucjc-identidad-plus` | | | | |
 | Descubrimiento A | `dani84mol/tienda-ucjc-descubrimiento` | | | | |
-| Descubrimiento B | `tienda-ucjc-compra/tienda-ucjc-descubrimiento-B` | | | | |
+| Descubrimiento B | `tienda-ucjc-compra/tienda-ucjc-descubrimiento-B` | `Adrián Pingarrón`| `v0.2.1`| `2026-11-25`| Ok + nuevo release|
 | Descubrimiento C | `Juampee/descubrimiento-muy-mejorado` | | | | |
-| Compra A | `tienda-ucjc-compra/tienda-ucjc-compra` | | | | |
+| Compra A | `tienda-ucjc-compra/tienda-ucjc-compra` | `Adrián Pingarrón`| `v.0.3.1`| `2026-11-25`| Ok + Nuevo release|
 | Compra B | `ucjc-ecommerce-identidad/tienda-ucjc-compra-b` | | | | |
 | Compra C | `dani84mol/tienda-ucjc-compra` | | | | |
 | Datos A | `hansjeffas/tienda-ucjc-datos` | | | | |
@@ -177,8 +177,8 @@ Una fila por variante. La release es el tag que demuestra la conformidad.
 
 ## Estado del contrato
 
-- [x] `propuesto`
-- [ ] `firmado`
+- [ ] `propuesto`
+- [x] `firmado`
 - [ ] `deprecado`
 
 ## Historial
@@ -188,3 +188,4 @@ Una fila por variante. La release es el tag que demuestra la conformidad.
 - `2026-11-25` — Fechas de entrada en vigor, valores de reserva, sin `!important`, listeners que se quitan, un test por evento emitido.
 - `2026-11-25` — Tabla de variables con reserva típica; API documentada; shell mínimo `v0.3.10`.
 - `2026-11-25` — `adoptar()` con `adoptedStyleSheets`: la hoja sobrevive a los repintados con `innerHTML`; `leerTokens().presentacion` devuelve `1` sin comillas.
+- 2026-11-25` — Firma Compra A y Descubrimiento B
